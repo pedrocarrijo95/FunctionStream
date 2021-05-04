@@ -1,6 +1,5 @@
 const fdk=require('@fnproject/fdk');
 
-fdk.handle(function(){
 var fs = require('fs');
 const st = require("oci-streaming");
 const common = require("oci-common");
@@ -35,6 +34,7 @@ const waiters = adminClient.createWaiters();
 var jsonstring = "Iniciando...";
 console.log("mensagem:"+ jsonstring); 
 
+fdk.handle(function(){
 (async () => {
   console.log("Get or Create the stream.");
   let stream = await getOrCreateStream(compartmentId, partitions, exampleStreamName);
