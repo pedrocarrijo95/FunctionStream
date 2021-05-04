@@ -6,7 +6,7 @@ const common = require("oci-common");
 
 var messageslist = [];
 
-fdk.handle(function(){
+//fdk.handle(function(){
 // TODO: Fill in appropriate values for tenancy (str) / fingerprint (str) / passphrase(optional) (str | null) / privateKey (str) / region (common.Region)
 const tenancy = "ocid1.tenancy.oc1..aaaaaaaah2c25pobzyzvkcznnozputxfxtz3qvewrqaga7z66tdjrgvigbiq";
 const user = "ocid1.user.oc1..aaaaaaaakkczxk5vdewknybdqfkogenlhu2isoymowv7kze6mdmvt23qg6oa";
@@ -77,8 +77,8 @@ console.log("mensagem:"+ jsonstring);
   console.log("jsonstring: "+jsonstring);
   
 })();
-return {'message': 'Sucesso: '+jsonstring}
-})
+//return {'message': 'Sucesso: '+jsonstring}
+//})
 
 
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
@@ -128,8 +128,8 @@ async function publishExampleMessages(client, streamId) {
   let messages = [];
   for (let i = 1; i <= 3; i++) {
     let entry = {
-      key: Buffer.from("chaveMensagem" + i).toString("base64"),
-      value: Buffer.from("valorMensagem" + i).toString("base64")
+      key: Buffer.from("ChaveMensagemViaFunc" + i).toString("base64"),
+      value: Buffer.from("ValorMensagemViaFunc" + i).toString("base64")
     };
     messages.push(entry);
   }
