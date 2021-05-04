@@ -1,13 +1,6 @@
 const fdk=require('@fnproject/fdk');
 
-/**fdk.handle(function(input){
-  let name = 'World';
-  if (input.name) {
-    name = input.name;
-  }
-  console.log('\nInside Node Hello World function')
-  return {'message': 'Hello ' + name}
-})**/
+fdk.handle(function(input){
 var fs = require('fs');
 const st = require("oci-streaming");
 const common = require("oci-common");
@@ -82,7 +75,7 @@ const waiters = adminClient.createWaiters();
 
 
 })();
-
+})
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
   const listStreamsRequest = {
     compartmentId: compartmentId,
@@ -183,3 +176,4 @@ async function getCursorByGroup(client, streamId, groupName, instanceName) {
 async function delay(s) {
   return new Promise(resolve => setTimeout(resolve, s * 1000));
 }
+
