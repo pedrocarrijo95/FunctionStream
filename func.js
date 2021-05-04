@@ -1,10 +1,11 @@
 const fdk=require('@fnproject/fdk');
 
-fdk.handle(function(input){
+fdk.handle(function(){
 var fs = require('fs');
 const st = require("oci-streaming");
 const common = require("oci-common");
 
+var messageslist = [];
 
 // TODO: Fill in appropriate values for tenancy (str) / fingerprint (str) / passphrase(optional) (str | null) / privateKey (str) / region (common.Region)
 const tenancy = "ocid1.tenancy.oc1..aaaaaaaah2c25pobzyzvkcznnozputxfxtz3qvewrqaga7z66tdjrgvigbiq";
@@ -62,9 +63,9 @@ const waiters = adminClient.createWaiters();
   // Committed offsets are managed for the group, and partitions
   // are dynamically balanced amongst consumers in the group.
 
-  console.log("Starting a simple message loop with a group cursor");
-  const groupCursor = await getCursorByGroup(client, streamId, "exampleGroup", "exampleInstance-1");
-  await simpleMessageLoop(client, streamId, groupCursor);
+  //console.log("Starting a simple message loop with a group cursor");
+  //const groupCursor = await getCursorByGroup(client, streamId, "exampleGroup", "exampleInstance-1");
+  //await simpleMessageLoop(client, streamId, groupCursor);
 
   // Cleanup; remember to delete streams which are not in use.
   //await deleteStream(adminClient, streamId);
@@ -72,10 +73,10 @@ const waiters = adminClient.createWaiters();
   // Stream deletion is an asynchronous operation, give it some time to complete.
   //const getStreamRequest = { streamId: streamId };
   //await waiters.forStream(getStreamRequest, st.models.Stream.LifecycleState.Deleted);
-
-
+  var jsonstring = JSON.stringify(messageslist);
+  return {'message': jsonstring}
 })();
-return {'message': 'Sucesso '}
+
 })
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
   const listStreamsRequest = {
@@ -144,12 +145,17 @@ async function simpleMessageLoop(client, streamId, initialCursor) {
     };
     const response = await client.getMessages(getRequest);
     console.log("Read %s messages.", response.items.length);
+    var i = 0;
     for (var message of response.items) {
-      console.log(
+      messageslist[i] = new Object();
+      messageslist[i].key = Buffer.from(message.key, "base64").toString();
+      messageslist[i].value = Buffer.from(message.value, "base64").toString();
+      i++;
+      /**console.log(
         "%s: %s",
         Buffer.from(message.key, "base64").toString(),
         Buffer.from(message.value, "base64").toString()
-      );
+      );**/
     }
     // getMessages is a throttled method; clients should retrieve sufficiently large message
     // batches, as to avoid too many http requests.
