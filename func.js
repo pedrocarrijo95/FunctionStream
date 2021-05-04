@@ -42,7 +42,8 @@ const adminClient = new st.StreamAdminClient({ authenticationDetailsProvider: pr
 const client = new st.StreamClient({ authenticationDetailsProvider: provider });
 const waiters = adminClient.createWaiters();
 
-var jsonstring = "";
+var jsonstring = "testejson";
+console.log("mensagem:"+ jsonstring); 
 (async () => {
   console.log("Get or Create the stream.");
   let stream = await getOrCreateStream(compartmentId, partitions, exampleStreamName);
@@ -78,7 +79,8 @@ var jsonstring = "";
   console.log("jsonstring: "+jsonstring);
   
 })();
-return {'message': jsonstring}
+console.log("mensagem:"+ jsonstring); 
+
 
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
   const listStreamsRequest = {
