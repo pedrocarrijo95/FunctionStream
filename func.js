@@ -42,7 +42,7 @@ const adminClient = new st.StreamAdminClient({ authenticationDetailsProvider: pr
 const client = new st.StreamClient({ authenticationDetailsProvider: provider });
 const waiters = adminClient.createWaiters();
 
-
+var jsonstring = "";
 (async () => {
   console.log("Get or Create the stream.");
   let stream = await getOrCreateStream(compartmentId, partitions, exampleStreamName);
@@ -74,11 +74,11 @@ const waiters = adminClient.createWaiters();
   // Stream deletion is an asynchronous operation, give it some time to complete.
   //const getStreamRequest = { streamId: streamId };
   //await waiters.forStream(getStreamRequest, st.models.Stream.LifecycleState.Deleted);
-  var jsonstring = JSON.stringify(messageslist);
+  jsonstring = JSON.stringify(messageslist);
   console.log("jsonstring: "+jsonstring);
-  return {'message': jsonstring}
+  
 })();
-
+return {'message': jsonstring}
 
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
   const listStreamsRequest = {
