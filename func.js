@@ -6,6 +6,7 @@ const common = require("oci-common");
 
 var messageslist = [];
 
+fdk.handle(function(){
 // TODO: Fill in appropriate values for tenancy (str) / fingerprint (str) / passphrase(optional) (str | null) / privateKey (str) / region (common.Region)
 const tenancy = "ocid1.tenancy.oc1..aaaaaaaah2c25pobzyzvkcznnozputxfxtz3qvewrqaga7z66tdjrgvigbiq";
 const user = "ocid1.user.oc1..aaaaaaaakkczxk5vdewknybdqfkogenlhu2isoymowv7kze6mdmvt23qg6oa";
@@ -34,7 +35,7 @@ const waiters = adminClient.createWaiters();
 var jsonstring = "Iniciando...";
 console.log("mensagem:"+ jsonstring); 
 
-fdk.handle(function(){
+
 (async () => {
   console.log("Get or Create the stream.");
   let stream = await getOrCreateStream(compartmentId, partitions, exampleStreamName);
@@ -70,7 +71,7 @@ fdk.handle(function(){
   console.log("jsonstring: "+jsonstring);
   
 })();
-return {'message': 'Sucesso !'}
+return {'message': 'Sucesso: '+jsonstring}
 })
 
 
