@@ -75,6 +75,7 @@ const waiters = adminClient.createWaiters();
 
 
 })();
+return {'message': 'Sucesso '}
 })
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
   const listStreamsRequest = {
