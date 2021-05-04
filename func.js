@@ -42,7 +42,7 @@ const adminClient = new st.StreamAdminClient({ authenticationDetailsProvider: pr
 const client = new st.StreamClient({ authenticationDetailsProvider: provider });
 const waiters = adminClient.createWaiters();
 
-var jsonstring = "testejson";
+var jsonstring = "Iniciando...";
 console.log("mensagem:"+ jsonstring); 
 (async () => {
   console.log("Get or Create the stream.");
@@ -79,7 +79,7 @@ console.log("mensagem:"+ jsonstring);
   console.log("jsonstring: "+jsonstring);
   
 })();
-console.log("mensagem:"+ jsonstring); 
+return {'message': 'Sucesso !'}
 
 
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
@@ -141,11 +141,11 @@ async function getCursorByPartition(client, streamId, partition) {
 
 async function simpleMessageLoop(client, streamId, initialCursor) {
   let cursor = initialCursor;
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < 15; i++) {
     const getRequest = {
       streamId: streamId,
       cursor: cursor,
-      limit: 10
+      limit: 15
     };
     const response = await client.getMessages(getRequest);
     console.log("Read %s messages.", response.items.length);
