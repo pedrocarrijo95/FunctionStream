@@ -23,6 +23,7 @@ const provider = new common.SimpleAuthenticationDetailsProvider(
   passphrase,
   region
 );
+//ocid1.stream.oc1.iad.amaaaaaan4ty7pia46rybujp2bkohf5z4uvdype7hcr5fgzrowuhwndxmg5q
 
 /**const args = process.argv.slice(2);
 console.log(args);
@@ -41,6 +42,9 @@ const partitions = 1;
 const adminClient = new st.StreamAdminClient({ authenticationDetailsProvider: provider });
 const client = new st.StreamClient({ authenticationDetailsProvider: provider });
 const waiters = adminClient.createWaiters();
+console.log("Starting a simple message loop with a partition cursor");
+const partitionCursor = await getCursorByPartition(client, streamId, "0");
+await simpleMessageLoop(client, streamId, partitionCursor); 
 
 (async () => {
   console.log("Get or Create the stream.");
@@ -76,7 +80,7 @@ const waiters = adminClient.createWaiters();
   var jsonstring = JSON.stringify(messageslist);
   return {'message': jsonstring}
 })();
-
+return;
 })
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
   const listStreamsRequest = {
