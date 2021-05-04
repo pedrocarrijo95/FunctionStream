@@ -1,5 +1,6 @@
 const fdk=require('@fnproject/fdk');
 
+fdk.handle(function(){
 var fs = require('fs');
 const st = require("oci-streaming");
 const common = require("oci-common");
@@ -23,17 +24,6 @@ const provider = new common.SimpleAuthenticationDetailsProvider(
   region
 );
 //ocid1.stream.oc1.iad.amaaaaaan4ty7pia46rybujp2bkohf5z4uvdype7hcr5fgzrowuhwndxmg5q
-
-/**const args = process.argv.slice(2);
-console.log(args);
-if (args.length !== 1) {
-  console.error(
-    "Unexpected number of arguments received. Consult the script header comments for expected arguments"
-  );
-  process.exit(-1);
-}
-const compartmentId = args[0];
-**/
 const compartmentId = "ocid1.compartment.oc1..aaaaaaaaf6jo7uwxdg3k3qngbvw43wodwzyxwamvxtejqb7hnrb5j6rsrfjq";
 const exampleStreamName = "StreamingHubiTeam";
 const partitions = 1;
@@ -44,6 +34,7 @@ const waiters = adminClient.createWaiters();
 
 var jsonstring = "Iniciando...";
 console.log("mensagem:"+ jsonstring); 
+
 (async () => {
   console.log("Get or Create the stream.");
   let stream = await getOrCreateStream(compartmentId, partitions, exampleStreamName);
@@ -80,6 +71,7 @@ console.log("mensagem:"+ jsonstring);
   
 })();
 return {'message': 'Sucesso !'}
+})
 
 
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
