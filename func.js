@@ -44,6 +44,12 @@ console.log("mensagem:"+ jsonstring);
   client.endpoint = stream.messagesEndpoint;
   const streamId = stream.id;
 
+  // publish some messages to the stream
+  await publishExampleMessages(client, streamId);
+
+  // give the streaming service a second to propagate messages
+  await delay(1);
+
   // Use a cursor for getting messages; each getMessages call will return a next-cursor for iteration.
   // There are a couple kinds of cursors.
   // A cursor can be created at a given partition/offset.
@@ -117,6 +123,27 @@ async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
   return activeStream.stream;
 }
 
+async function publishExampleMessages(client, streamId) {
+  // build up a putRequest and publish some messages to the stream
+  let messages = [];
+  for (let i = 1; i <= 3; i++) {
+    let entry = {
+      key: Buffer.from("chaveMensagem" + i).toString("base64"),
+      value: Buffer.from("valorMensagem" + i).toString("base64")
+    };
+    messages.push(entry);
+  }
+
+  console.log("Publishing %s messages to stream %s.", messages.length, streamId);
+  const putMessageDetails = { messages: messages };
+  const putMessagesRequest = {
+    putMessagesDetails: putMessageDetails,
+    streamId: streamId
+  };
+  const putMessageResponse = await client.putMessages(putMessagesRequest);
+  for (var entry of putMessageResponse.putMessagesResult.entries)
+    console.log("Published messages to parition %s, offset %s", entry.partition, entry.offset);
+}
 
 async function getCursorByPartition(client, streamId, partition) {
   console.log("Creating a cursor for partition %s.", partition);
