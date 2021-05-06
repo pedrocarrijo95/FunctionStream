@@ -8,6 +8,8 @@
 	"dependencies": {
 		"@fnproject/fdk": "0.0.20",
 		"fs": "0.0.1-security",
-		"oci-sdk": "^1.19.2"
+		"node-oracledb": "^1.0.2",
+		"oci-sdk": "^1.19.2",
+		"oracledb": "^5.1.0"
 	}
 }
