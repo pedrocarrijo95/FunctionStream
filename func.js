@@ -33,19 +33,19 @@ fdk.handle(async function(input){
       },
       data : data
     };
+    
     var resp = "a";
-    (async () => {
-      try {
-        const response = await axios(config);
-        resp = response.data;
-        console.log(response.data);
-      } catch (error) {
-        console.log(error.response.body);
-      }
-    })();
+    try {
+      const response = await axios(config);
+      resp = response.data;
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.response.body);
+    }
 
 
-    return {'message': 'Sucesso: '+response}
+
+    return {'message': 'Sucesso: '+resp}
 
 })
 
