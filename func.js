@@ -6,10 +6,10 @@ fdk.handle(function(data){
   
   try{
     console.log(data);
-    if(data.key != null){
-      var messagekey = Buffer.from(data.key.toString(), "base64").toString();
+    if(data[0].key != null){
+      var messagekey = Buffer.from(data[0].key.toString(), "base64").toString();
       console.log("MessageKey: "+messagekey);
-      var messagevalue = Buffer.from(data.value.toString(), "base64").toString();
+      var messagevalue = Buffer.from(data[0].value.toString(), "base64").toString();
       console.log("MessageValue: "+messagevalue);
       sodaInsert("fruit",messagekey,messagevalue);  
     }
