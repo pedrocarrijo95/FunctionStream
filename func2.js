@@ -9,7 +9,7 @@ var messageslist = [];
 //const oracledb = require('oracledb');
 //oracledb.initOracleClient({ libDir: 'C:\\oracle\\instantclient_19_8' });
 
-//fdk.handle(function(){
+fdk.handle(function(data){
 // TODO: Fill in appropriate values for tenancy (str) / fingerprint (str) / passphrase(optional) (str | null) / privateKey (str) / region (common.Region)
 const tenancy = "ocid1.tenancy.oc1..aaaaaaaah2c25pobzyzvkcznnozputxfxtz3qvewrqaga7z66tdjrgvigbiq";
 const user = "ocid1.user.oc1..aaaaaaaakkczxk5vdewknybdqfkogenlhu2isoymowv7kze6mdmvt23qg6oa";
@@ -41,26 +41,29 @@ console.log("mensagem:"+ jsonstring);
 
 (async () => {
   try{
-  let connection = await oracledb.getConnection({ user: "admin", password: "Oracle123456", connectionString: "ajdiotdemo_high" });
+    let connection = await oracledb.getConnection({ user: "admin", password: "Oracle123456", connectionString: "ajdiotdemo_high" });
 
-  console.log("Get or Create the stream.");
-  let stream = await getOrCreateStream(compartmentId, partitions, exampleStreamName);
-
-  client.endpoint = stream.messagesEndpoint;
-  const streamId = stream.id;
-
-  // publish some messages to the stream
-  //await publishExampleMessages(client, streamId);
-
-  // give the streaming service a second to propagate messages
-  //await delay(1);
-
-  console.log("Starting a simple message loop with a partition cursor");
-  const partitionCursor = await getCursorByPartition(client, streamId, "0");
-  await simpleMessageLoop(client, streamId, partitionCursor); 
-
-  jsonstring = JSON.stringify(messageslist);
-  console.log("jsonstring: "+jsonstring);
+  
+    // Create the parent object for SODA
+    const soda = connection.getSodaDatabase();
+   
+    // Create a new SODA collection
+    //collection = await soda.createCollection("mycollection");
+    collection = await soda.openCollection("mycollection");
+            
+    var messagekey = Buffer.from(data.key, "base64").toString();
+    var messagevalue = Buffer.from(data.value, "base64").toString();
+    
+    // Insert a document.  A system generated key is created by default.
+    content = {key: messagekey, value: messagevalue};
+    doc = await collection.insertOneAndGet(content);
+    const key = doc.key;
+    console.log("The key of the new SODA document is: ", key);
+         
+    // Fetch the document back
+    doc = await collection.find().fetchArraySize(0).key(key).getOne(); // A SodaDocument
+    content = doc.getContent();                                        // A JavaScript object
+    console.log(content);
       
   } catch (err) {
      console.error(err);
@@ -75,8 +78,9 @@ console.log("mensagem:"+ jsonstring);
   }
   
 })();
-//return {'message': 'Sucesso: '+jsonstring}
-//})
+
+return {'message': 'Sucesso'}
+})
 
 
 async function getOrCreateStream(compartmentId, paritions, exampleStreamName) {
@@ -181,22 +185,4 @@ async function delay(s) {
 
 
 
-  /** 
-  // Create the parent object for SODA
-   const soda = connection.getSodaDatabase();
- 
-  // Create a new SODA collection
-  // This will open an existing collection, if the name is already in use.
-  //collection = await soda.createCollection("mycollection");
-  collection = await soda.openCollection("mycollection");
-          
-  // Insert a document.  A system generated key is created by default.
-  content = {name: "Teste3", address: {city: "Melbourne"}};
-  doc = await collection.insertOneAndGet(content);
-  const key = doc.key;
-  console.log("The key of the new SODA document is: ", key);
-       
-  // Fetch the document back
-  doc = await collection.find().fetchArraySize(0).key(key).getOne(); // A SodaDocument
-  content = doc.getContent();                                        // A JavaScript object
-  console.log(content);*/
+  

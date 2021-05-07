@@ -1,6 +1,6 @@
 const oracledb = require('oracledb');
 
-oracledb.initOracleClient({ libDir: 'C:\\oracle\\instantclient_19_8' });
+oracledb.initOracleClient({ libDir: './instantclient_19_6' });
 oracledb.autoCommit = true;
 async function run() {
 
