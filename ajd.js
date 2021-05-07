@@ -8,15 +8,15 @@ async function run() {
 
   try {
 
-    connection = await oracledb.getConnection({ user: "admin", password: "Oracle123456", connectionString: "ajdiotdemo_high" });
+    connection = await oracledb.getConnection({ user: "admin", password: "Oracle123456", connectionString: "ajdatabase_high" });
 
     // Create the parent object for SODA
     const soda = connection.getSodaDatabase();
  
     // Create a new SODA collection
     // This will open an existing collection, if the name is already in use.
-    //collection = await soda.createCollection("mycollection");
-    collection = await soda.openCollection("mycollection");
+    collection = await soda.createCollection("mycollection");
+    //collection = await soda.openCollection("mycollection");
     
     // Insert a document.  A system generated key is created by default.
     content = {name: "Teste3", address: {city: "Melbourne"}};
