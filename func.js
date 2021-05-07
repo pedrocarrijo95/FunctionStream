@@ -3,19 +3,18 @@ var request = require('request');
 
 
 fdk.handle(function(data){
-  
-  if(data.message != null){
-    //console.log(dados);
 
+  if(data != null){
     var messagekey = Buffer.from(dados.key, "base64").toString();
     var messagevalue = Buffer.from(dados.value, "base64").toString();
-    sodaInsert("fruit",messagekey,messagevalue);
+    sodaInsert("fruit",messagekey,messagevalue);  
   }
-  
 
   return {'message': 'Sucesso: '+dados}
 
 })
+
+//sodaInsert("fruit","a","b");
 
 function sodaInsert(collection,messagekey,messagevalue){
   var options = {
