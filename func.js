@@ -10,7 +10,7 @@ fdk.handle(function(data){
     sodaInsert("fruit",messagekey,messagevalue);  
   }
 
-  return {'message': 'Sucesso: '+data}
+  return {'message': 'Sucesso'}
 
 })
 
