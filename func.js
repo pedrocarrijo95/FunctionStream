@@ -4,9 +4,10 @@ var request = require('request');
 
 fdk.handle(function(data){
   
-  var messagekey = Buffer.from(data.key, "base64").toString();
+  var dados = JSON.parse(data);
+  var messagekey = Buffer.from(dados.key, "base64").toString();
   console.log("MessageKey: "+messagekey);
-  var messagevalue = Buffer.from(data.value, "base64").toString();
+  var messagevalue = Buffer.from(dados.value, "base64").toString();
   console.log("MessageValue: "+messagevalue);
   sodaInsert("fruit",messagekey,messagevalue);  
   
