@@ -4,22 +4,23 @@ var request = require('request');
 
 fdk.handle(function(data){
   
-  (async () => {
+
     try{
       //console.log(data);
-      if(data[0].key != null){
-        var messagekey = Buffer.from(data[0].key.toString(), "base64").toString();
-        console.log("MessageKey: "+messagekey);
-        var messagevalue = Buffer.from(data[0].value.toString(), "base64").toString();
-        console.log("MessageValue: "+messagevalue);
-        await sodaInsert("fruit","teste","testes");
-        await delay(1);
-      }
+      //if(data[0].key != null){
+        //var messagekey = Buffer.from(data[0].key.toString(), "base64").toString();
+        //console.log("MessageKey: "+messagekey);
+        //var messagevalue = Buffer.from(data[0].value.toString(), "base64").toString();
+        sodaInsert("fruit","teste","testes");
+        console.log("inseriu");
+        //console.log("MessageValue: "+messagevalue);
+    
+      //}
     }
     catch(err){
       console.log("erro: "+err.message);
     }
-  })();
+
 
     return {'message': 'Sucesso'}
 
@@ -27,7 +28,7 @@ fdk.handle(function(data){
 
 //sodaInsert("fruit","a","b");
 
-async function sodaInsert(collection,messagekey,messagevalue){
+function sodaInsert(collection,messagekey,messagevalue){
   var options = {
     'method': 'POST',
     'url': 'https://k3knrkyh5wbw6k8-ajdatabase.adb.us-ashburn-1.oraclecloudapps.com/ords/admin/soda/latest/'+collection,
@@ -45,7 +46,7 @@ async function sodaInsert(collection,messagekey,messagevalue){
     console.log(response.body);
   });
 
-  await delay(2);
+ 
 }
 
 async function delay(s) {
