@@ -2,7 +2,7 @@ const fdk=require('@fnproject/fdk');
 var request = require('request');
 const axios = require('axios');
 
-fdk.handle(async function(input){
+fdk.handle(async function(input,ctx){
   
 
     /**try{
@@ -33,10 +33,11 @@ fdk.handle(async function(input){
       },
       data : data
     };
-    
+
     var resp = "a";
     try {
       const response = await axios(config);
+      console.log(resp);
       resp = response.data;
       console.log(response.data);
     } catch (error) {
