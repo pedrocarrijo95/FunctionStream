@@ -39,7 +39,9 @@ async function sodaInsert(collection,messagekey,messagevalue){
   
   };
   request(options, function (error, response) {
-    if (error) throw new Error(error);
+    if (error){
+      console.log(error.message);
+    }
     console.log(response.body);
   });
 
