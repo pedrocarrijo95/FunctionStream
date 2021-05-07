@@ -4,13 +4,18 @@ var request = require('request');
 
 fdk.handle(function(data){
   
-  var dados = JSON.parse(data);
-  if(dados.key != null){
-    var messagekey = Buffer.from(dados.key, "base64").toString();
-    console.log("MessageKey: "+messagekey);
-    var messagevalue = Buffer.from(dados.value, "base64").toString();
-    console.log("MessageValue: "+messagevalue);
-    sodaInsert("fruit",messagekey,messagevalue);  
+  try{
+    var dados = JSON.parse(data);
+    if(dados.key != null){
+      var messagekey = Buffer.from(dados.key.toString(), "base64").toString();
+      console.log("MessageKey: "+messagekey);
+      var messagevalue = Buffer.from(dados.value.toString(), "base64").toString();
+      console.log("MessageValue: "+messagevalue);
+      sodaInsert("fruit",messagekey,messagevalue);  
+    }
+  }
+  catch(err){
+    console.log("erro: "+err.message);
   }
   
 
