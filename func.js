@@ -1,22 +1,37 @@
 const fdk=require('@fnproject/fdk');
+var request = require('request');
 
-var fs = require('fs');
-const st = require("oci-streaming");
-const common = require("oci-common");
 
-var messageslist = [];
-//const oracledb = require('oracledb');
-//oracledb.initOracleClient({ libDir: 'C:\\oracle\\instantclient_19_8' });
+fdk.handle(function(data){
+  
+  if(data.message != null){
+    //console.log(dados);
 
-/**fdk.handle(function(data){
-  let dados = "nao chegou nada";
-  if(data){
-    dados = data;
+    var messagekey = Buffer.from(dados.key, "base64").toString();
+    var messagevalue = Buffer.from(dados.value, "base64").toString();
+    sodaInsert("fruit",messagekey,messagevalue);
   }
-  console.log(dados);
+  
+
   return {'message': 'Sucesso: '+dados}
 
-})**/
+})
 
-console.log(Buffer.from('eyJrZXkiOiAib2kiLCAidmFsdWUiOiAidmFsb3JPSSJ9', "base64").toString());
+function sodaInsert(collection,messagekey,messagevalue){
+  var options = {
+    'method': 'POST',
+    'url': 'https://k3knrkyh5wbw6k8-ajdatabase.adb.us-ashburn-1.oraclecloudapps.com/ords/admin/soda/latest/'+collection,
+    'headers': {
+      'Authorization': 'Basic YWRtaW46T3JhY2xlMTIzNDU2',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({"key":messagekey,"value":messagevalue})
+  
+  };
+  request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+  });
+}
+
 
