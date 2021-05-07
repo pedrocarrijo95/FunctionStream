@@ -3,12 +3,13 @@ var request = require('request');
 
 
 fdk.handle(function(data){
-
-  if(data != null){
-    var messagekey = Buffer.from(data.key, "base64").toString();
-    var messagevalue = Buffer.from(data.value, "base64").toString();
-    sodaInsert("fruit",messagekey,messagevalue);  
-  }
+  
+  var messagekey = Buffer.from(data.key, "base64").toString();
+  console.log("MessageKey: "+messagekey);
+  var messagevalue = Buffer.from(data.value, "base64").toString();
+  console.log("MessageValue: "+messagevalue);
+  sodaInsert("fruit",messagekey,messagevalue);  
+  
 
   return {'message': 'Sucesso'}
 
