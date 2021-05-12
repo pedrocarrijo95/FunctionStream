@@ -8,10 +8,10 @@ fdk.handle(async function(input,ctx){
     try {
       for(var i=0;i<input.length;i++){
         var msgdatastr = Buffer.from(input[i].key.toString(), "base64").toString()
-        var msgdata = Date(msgdatastr);
+        //var msgdata = Date(msgdatastr);
         var msgtemp = Buffer.from(input[i].value.toString(), "base64").toString()
         
-        var data = JSON.stringify({"data":msgdata,"temperatura":msgtemp});
+        var data = JSON.stringify({"data":msgdatastr,"temperatura":msgtemp});
 
         var config = {
           method: 'post',
