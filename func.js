@@ -7,7 +7,8 @@ fdk.handle(async function(input,ctx){
     var resp = "a";
     try {
       for(var i=0;i<input.length;i++){
-        var msgdata = Buffer.from(input[i].key.toString(), "base64").toString()
+        var msgdatastr = Buffer.from(input[i].key.toString(), "base64").toString()
+        var msgdata = Date(msgdatastr);
         var msgtemp = Buffer.from(input[i].value.toString(), "base64").toString()
         
         var data = JSON.stringify({"data":msgdata,"temperatura":msgtemp});
