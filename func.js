@@ -7,12 +7,14 @@ fdk.handle(async function(input,ctx){
     var resp = "a";
     try {
       for(var i=0;i<input.length;i++){
-        var msgdatastr = Buffer.from(input[i].key.toString(), "base64").toString()
+        var msgdatastr = Buffer.from(input[i].key.toString(), "base64").toString() //key: data+timestamp 
+                                                                                   //value:json-customizado
+                                                                                   //*Reflection
         //var msgdata = Date(msgdatastr);
         var msgtemp = Buffer.from(input[i].value.toString(), "base64").toString();
         var msgtempint = parseInt(msgtemp,10);
         
-        var data = JSON.stringify({"data":msgdatastr,"temperatura":msgtempint});
+        var data = JSON.stringify({"data":msgdatastr,"temperatura":msgtempint}); //bloco inteiro
 
         var config = {
           method: 'post',
