@@ -18,9 +18,9 @@ fdk.handle(async function(input,ctx){
 
         var config = {
           method: 'post',
-          url: 'https://k3knrkyh5wbw6k8-db202105101327.adb.us-ashburn-1.oraclecloudapps.com/ords/admin/soda/latest/mycollection',
+          url: 'https://qeixw2pkavq6sio-atpcarrijodb.adb.sa-saopaulo-1.oraclecloudapps.com/ords/admin/soda/latest/mycollection',
           headers: { 
-            'Authorization': 'Basic YWRtaW46T3JhY2xlMTIzNDU2', 
+            'Authorization': 'Basic YWRtaW46T3JhY2xlMTI0NDI5', 
             'Content-Type': 'application/json'
           },
           data : data
