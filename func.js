@@ -32,7 +32,7 @@ fdk.handle(async function(input,ctx){
         console.log(response.data);
       }
     } catch (error) {
-      console.log(error.response.body);
+      console.log(error.response);
     }
 
 
